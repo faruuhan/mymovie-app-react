@@ -51,6 +51,8 @@ export class ListFav extends Component {
           <h4 className="text-center py-4">LIST FAVORITE</h4>
           <div className="row d-flex flex-wrap gap-3 justify-content-center">
             {this.state.data.map((item) => {
+              let getLocal = JSON.parse(localStorage.getItem("data"));
+              let checkFav = getLocal.find((i) => i.id === item.id);
               return (
                 <div key={item.id} className="card" style={{ width: "18rem" }}>
                   <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} className="card-img-top" alt="..." />
@@ -60,8 +62,8 @@ export class ListFav extends Component {
                     <p className="card-text">Release Date : {item.release_date}.</p>
                   </div>
                   <div className="d-flex justify-content-end mb-2">
-                    <button className="btn btn-danger" onClick={() => this.addToFav(item)}>
-                      UnFavorite
+                    <button className={checkFav ? "btn btn-outline-danger" : "btn btn-danger"} onClick={() => this.addToFav(item)}>
+                      {checkFav ? "Favorited" : "Favorite"}
                     </button>
                   </div>
                 </div>
