@@ -41,6 +41,7 @@ export class ListFav extends Component {
     } else {
       localStorage.setItem("data", JSON.stringify([item]));
     }
+    this.fetchData();
   }
 
   render() {
