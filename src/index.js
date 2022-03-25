@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./styles/index.css";
-import NowPlaying from "./pages/NowPlaying";
-import ListFav from "./pages/ListFav";
+import Routes from "./routes/Routes";
 
 ReactDOM.render(
   <React.StrictMode>
-    <NowPlaying />
+    <Routes />
   </React.StrictMode>,
   document.getElementById("root")
 );
