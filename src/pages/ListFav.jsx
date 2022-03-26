@@ -48,7 +48,7 @@ const ListFav = () => {
                 let getLocal = JSON.parse(localStorage.getItem("data"));
                 let checkFav = getLocal.find((i) => i.id === item.id);
                 return (
-                  <div key={item.id} className="card border-0 bg-transparant" style={{ width: "18%" }}>
+                  <div key={item.id} className="card border-0 bg-transparant" style={{ width: "14rem" }}>
                     <Link to={`/detail/${item.id}`}>
                       <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} className="card-img-top" alt="..." />
                     </Link>
