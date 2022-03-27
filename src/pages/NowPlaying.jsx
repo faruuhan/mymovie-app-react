@@ -20,7 +20,7 @@ const NowPlaying = () => {
       .then((response) => {
         setMovie(response.data.results);
         setData(response.data);
-        console.log(response);
+        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -93,7 +93,7 @@ const NowPlaying = () => {
                   </div>
                 );
               })}
-          <Pagination itemClass="page-item" linkClass="page-link" activePage={currentPage} totalItemsCount={data.total_results} prevPageText="Prev" nextPageText="Next" hideFirstLastPages="true" onChange={changePage} />
+          {isReady ? <Pagination itemClass="page-item" linkClass="page-link" activePage={currentPage} totalItemsCount={data.total_results} prevPageText="Prev" nextPageText="Next" hideFirstLastPages={true} onChange={changePage} /> : ""}
         </div>
       </div>
     </Layout>
