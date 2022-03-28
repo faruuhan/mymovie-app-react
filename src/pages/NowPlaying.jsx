@@ -20,7 +20,6 @@ const NowPlaying = () => {
       .then((response) => {
         setMovie(response.data.results);
         setData(response.data);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);

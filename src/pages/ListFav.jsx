@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import { useSelector, useDispatch } from "react-redux";
+import Layout from "../components/Layout";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import { reduxAction } from "../utility/redux/actions/action";
 
 const ListFav = () => {
-  const [movie, setMovie] = useState([]);
-  const [isReady, setIsReady] = useState(false);
+  const movie = useSelector((state) => state.favorites);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchData();
@@ -13,8 +15,8 @@ const ListFav = () => {
 
   const fetchData = () => {
     let getLocal = JSON.parse(localStorage.getItem("data"));
-    setMovie(getLocal);
-    setIsReady(true);
+    dispatch(reduxAction("GET_FAVORITES", getLocal));
+    console.log();
   };
 
   const addToFav = (item) => {
@@ -36,17 +38,14 @@ const ListFav = () => {
     fetchData();
   };
 
-  let getLocal = JSON.parse(localStorage.getItem("data"));
   return (
-    <div>
-      <Navbar />
+    <Layout>
       <div className="container">
         <h4 className="text-center py-4">LIST FAVORITE</h4>
         <div className="row d-flex flex-wrap gap-3">
-          {getLocal
+          {movie && movie.length > 0
             ? movie.map((item) => {
-                let getLocal = JSON.parse(localStorage.getItem("data"));
-                let checkFav = getLocal.find((i) => i.id === item.id);
+                let checkFav = movie.find((i) => i.id === item.id);
                 return (
                   <div key={item.id} className="card border-0 bg-transparant" style={{ width: "14rem" }}>
                     <Link to={`/detail/${item.id}`}>
@@ -66,7 +65,7 @@ const ListFav = () => {
             : "No Favorite"}
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 export default ListFav;
