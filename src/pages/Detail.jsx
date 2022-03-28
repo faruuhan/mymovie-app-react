@@ -57,7 +57,11 @@ const Detail = () => {
   };
 
   const genre = genres.map((items) => {
-    return items.name;
+    return (
+      <span className="badge rounded-pill bg-secondary me-2" key={items.id}>
+        {items.name}
+      </span>
+    );
   });
 
   const productCompanies = companies.map((items) => {
@@ -98,7 +102,7 @@ const Detail = () => {
                   )}
                 </div>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item">Genre : {genre.join(", ")}</li>
+                  <li className="list-group-item">Genre : {genre}</li>
                   <li className="list-group-item">
                     Release Date : {moment(movie.release_date).format("D MMMM YYYY")} ({productionCountries.join(", ")})
                   </li>
