@@ -12,6 +12,7 @@ const Detail = () => {
   const [companies, setCompanies] = useState([]);
   const [spoken, setSpoken] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [favorites, setFav] = useState([]);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -20,6 +21,8 @@ const Detail = () => {
 
   const fetchData = () => {
     const { id } = params;
+    let getLocal = JSON.parse(localStorage.getItem("data"));
+    setFav(getLocal);
     axios
       .get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API}&language=en-US`)
       .then((response) => {
@@ -28,12 +31,29 @@ const Detail = () => {
         setCompanies(response.data.production_companies);
         setSpoken(response.data.spoken_languages);
         setCountries(response.data.production_countries);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => setIsReady(true));
+  };
+
+  const addToFav = (item) => {
+    if (favorites) {
+      let findItem = favorites.findIndex((i) => item.id === i.id);
+      if (findItem != -1) {
+        let newFav = favorites;
+        favorites.splice(findItem, findItem + 1);
+        localStorage.removeItem("data");
+        localStorage.setItem("data", JSON.stringify(newFav));
+      } else {
+        favorites.push(item);
+        localStorage.setItem("data", JSON.stringify(favorites));
+      }
+    } else {
+      localStorage.setItem("data", JSON.stringify([item]));
+    }
+    fetchData();
   };
 
   const genre = genres.map((items) => {
@@ -67,6 +87,15 @@ const Detail = () => {
                     {movie.title} <span className="text-muted">({moment(movie.release_date).format("YYYY")})</span>
                   </h1>
                   <p className="fst-italic text-muted">{movie.tagline}</p>
+                  {favorites ? (
+                    <button className={favorites.find((i) => i.id === movie.id) ? "btn btn-outline-danger btn-sm" : "btn btn-danger btn-sm"} onClick={() => addToFav(movie)}>
+                      {favorites.find((i) => i.id === movie.id) ? "Favorited" : "Favorite"}
+                    </button>
+                  ) : (
+                    <button className="btn btn-danger btn-sm" onClick={() => addToFav(movie)}>
+                      Favorite
+                    </button>
+                  )}
                 </div>
                 <ul className="list-group list-group-flush">
                   <li className="list-group-item">Genre : {genre.join(", ")}</li>
@@ -96,7 +125,7 @@ const Detail = () => {
           </div>
         </div>
       ) : (
-        ""
+        <div className="container">Loding!!!</div>
       )}
     </Layout>
   );
