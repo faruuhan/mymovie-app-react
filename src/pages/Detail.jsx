@@ -12,6 +12,7 @@ const Detail = () => {
   const [companies, setCompanies] = useState([]);
   const [spoken, setSpoken] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [favorites, setFav] = useState([]);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -20,6 +21,8 @@ const Detail = () => {
 
   const fetchData = () => {
     const { id } = params;
+    let getLocal = JSON.parse(localStorage.getItem("data"));
+    setFav(getLocal);
     axios
       .get(`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API}&language=en-US`)
       .then((response) => {
@@ -28,7 +31,7 @@ const Detail = () => {
         setCompanies(response.data.production_companies);
         setSpoken(response.data.spoken_languages);
         setCountries(response.data.production_countries);
-        console.log(response.data);
+        document.title = `Muvi Ku - ${response.data.title}`;
       })
       .catch((err) => {
         console.log(err);
@@ -36,8 +39,29 @@ const Detail = () => {
       .finally(() => setIsReady(true));
   };
 
+  const addToFav = (item) => {
+    if (favorites) {
+      let findItem = favorites.findIndex((i) => item.id === i.id);
+      if (findItem != -1) {
+        favorites.splice(findItem, findItem + 1);
+        localStorage.removeItem("data");
+        localStorage.setItem("data", JSON.stringify(favorites));
+      } else {
+        favorites.push(item);
+        localStorage.setItem("data", JSON.stringify(favorites));
+      }
+    } else {
+      localStorage.setItem("data", JSON.stringify([item]));
+    }
+    fetchData();
+  };
+
   const genre = genres.map((items) => {
-    return items.name;
+    return (
+      <span className="badge rounded-pill bg-secondary me-2" key={items.id}>
+        {items.name}
+      </span>
+    );
   });
 
   const productCompanies = companies.map((items) => {
@@ -61,15 +85,24 @@ const Detail = () => {
               <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} style={{ width: "80%" }} alt="" />
             </div>
             <div className="col-lg-7">
-              <div className="card bg-transparant">
+              <div className="card">
                 <div className="card-header">
-                  <h1>
+                  <h1 className="text-dark">
                     {movie.title} <span className="text-muted">({moment(movie.release_date).format("YYYY")})</span>
                   </h1>
                   <p className="fst-italic text-muted">{movie.tagline}</p>
+                  {favorites ? (
+                    <button className={favorites.find((i) => i.id === movie.id) ? "btn btn-outline-danger btn-sm" : "btn btn-danger btn-sm"} onClick={() => addToFav(movie)}>
+                      {favorites.find((i) => i.id === movie.id) ? "Favorited" : "Favorite"}
+                    </button>
+                  ) : (
+                    <button className="btn btn-danger btn-sm" onClick={() => addToFav(movie)}>
+                      Favorite
+                    </button>
+                  )}
                 </div>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item">Genre : {genre.join(", ")}</li>
+                  <li className="list-group-item">Genre : {genre}</li>
                   <li className="list-group-item">
                     Release Date : {moment(movie.release_date).format("D MMMM YYYY")} ({productionCountries.join(", ")})
                   </li>
@@ -86,7 +119,7 @@ const Detail = () => {
           </div>
           <div className="row mt-3">
             <div className="col-lg">
-              <div className="card" style={{ width: "100%" }}>
+              <div className="card text-dark" style={{ width: "100%" }}>
                 <div className="card-header">Overview</div>
                 <div className="card-body">
                   <p className="card-text">{movie.overview}</p>
@@ -96,7 +129,7 @@ const Detail = () => {
           </div>
         </div>
       ) : (
-        ""
+        <div className="container">Loding!!!</div>
       )}
     </Layout>
   );
