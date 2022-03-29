@@ -23,6 +23,7 @@ const NowPlaying = () => {
       .then((response) => {
         setMovie(response.data.results);
         setData(response.data);
+        document.title = `Muvi Ku`;
       })
       .catch((err) => {
         console.log(err);
@@ -34,10 +35,9 @@ const NowPlaying = () => {
     if (favorites) {
       let findItem = favorites.findIndex((i) => item.id === i.id);
       if (findItem != -1) {
-        let newFav = favorites;
         favorites.splice(findItem, findItem + 1);
         localStorage.removeItem("data");
-        localStorage.setItem("data", JSON.stringify(newFav));
+        localStorage.setItem("data", JSON.stringify(favorites));
       } else {
         favorites.push(item);
         localStorage.setItem("data", JSON.stringify(favorites));
@@ -54,13 +54,13 @@ const NowPlaying = () => {
 
   return (
     <Layout>
-      <div className="container">
+      <div className="container py-3">
         <h4 className="text-center py-4">NOW PLAYING</h4>
         <div className="row flex-wrap gap-3">
           {isReady
             ? movie.map((item) => {
                 return (
-                  <div key={item.id} className="card border-0 bg-transparant" style={{ width: "14rem" }}>
+                  <div key={item.id} className="card border-0 bg-transparent" style={{ width: "14rem" }}>
                     <Link to={`/detail/${item.id}`}>
                       <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} className="card-img-top" alt={item.poster_path} />
                     </Link>

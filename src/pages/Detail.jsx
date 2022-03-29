@@ -31,6 +31,7 @@ const Detail = () => {
         setCompanies(response.data.production_companies);
         setSpoken(response.data.spoken_languages);
         setCountries(response.data.production_countries);
+        document.title = `Muvi Ku - ${response.data.title}`;
       })
       .catch((err) => {
         console.log(err);
@@ -42,10 +43,9 @@ const Detail = () => {
     if (favorites) {
       let findItem = favorites.findIndex((i) => item.id === i.id);
       if (findItem != -1) {
-        let newFav = favorites;
         favorites.splice(findItem, findItem + 1);
         localStorage.removeItem("data");
-        localStorage.setItem("data", JSON.stringify(newFav));
+        localStorage.setItem("data", JSON.stringify(favorites));
       } else {
         favorites.push(item);
         localStorage.setItem("data", JSON.stringify(favorites));
@@ -85,9 +85,9 @@ const Detail = () => {
               <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} style={{ width: "80%" }} alt="" />
             </div>
             <div className="col-lg-7">
-              <div className="card bg-transparant">
+              <div className="card">
                 <div className="card-header">
-                  <h1>
+                  <h1 className="text-dark">
                     {movie.title} <span className="text-muted">({moment(movie.release_date).format("YYYY")})</span>
                   </h1>
                   <p className="fst-italic text-muted">{movie.tagline}</p>
@@ -119,7 +119,7 @@ const Detail = () => {
           </div>
           <div className="row mt-3">
             <div className="col-lg">
-              <div className="card" style={{ width: "100%" }}>
+              <div className="card text-dark" style={{ width: "100%" }}>
                 <div className="card-header">Overview</div>
                 <div className="card-body">
                   <p className="card-text">{movie.overview}</p>
