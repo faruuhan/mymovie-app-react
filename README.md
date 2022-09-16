@@ -23,6 +23,12 @@ Go to the project directory
   cd mymovie-app-react
 ```
 
+Create .env file
+
+```bash
+  REACT_APP_API=PUT_YOUR_API_FROM_TMDB
+```
+
 Install dependencies
 
 ```bash
