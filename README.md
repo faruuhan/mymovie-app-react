@@ -1,13 +1,18 @@
+## About
+Muvi ku is collection list movie integration with API themoviedb
 
 ## Tech Stack
 
-**Front-End:** React, JavaScript Redux, Bootstrap CSS
+[![My Skills](https://skills.thijs.gg/icons?i=js,react,bootstrap,redux&theme=dark)](https://skills.thijs.gg)
 
 ## Features
 
 - Light/dark mode toggle
-- Favorite toggle
+- Favorite movie
 
+## Structur Folder
+
+![image](https://user-images.githubusercontent.com/92959224/192785082-8d35364e-3846-45ea-87f5-00075c8f1e4f.png)
 
 ## Run Locally
 
