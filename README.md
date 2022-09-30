@@ -1,5 +1,5 @@
 ## About
-Muvi ku is collection list movie integration with API themoviedb
+Muvi ku is collection list movie integration with API themoviedb and my first project at alterra academy with react js
 
 ## Tech Stack
 
@@ -8,7 +8,16 @@ Muvi ku is collection list movie integration with API themoviedb
 ## Features
 
 - Light/dark mode toggle
+<br>We can change mode from light to dark
+
+- Homepage
+<br>The first page that displays a random list of films and we can see the details of the films by clicking on them
+
+- Detail Movie
+<br>The first page that displays a random list of films and we can see the details of the films by clicking on them
+
 - Favorite movie
+</br>We can add movie to list favorite and will save to localstorage and can also remove from list favorite
 
 ## Structur Folder
 
