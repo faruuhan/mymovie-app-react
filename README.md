@@ -3,7 +3,7 @@ Muvi ku is collection list movie integration with API themoviedb and my first pr
 
 ## Tech Stack
 
-[![My Skills](https://skills.thijs.gg/icons?i=js,react,bootstrap,redux&theme=dark)](https://skills.thijs.gg)
+[![My Skills](https://skills.thijs.gg/icons?i=js,react,bootstrap,redux,vercel&theme=dark)](https://skills.thijs.gg)
 
 ## Features
 
